@@ -1,0 +1,7 @@
+.result h3{margin:0 0 8px 0}
+.recommend-text{font-size:1rem;margin-bottom:8px;color:var(--text)}
+.alts ul{padding-left:0;margin-top:12px}
+.alts li{padding:12px;border-radius:8px;background:linear-gradient(180deg,rgba(79,70,229,0.02),transparent);display:block;margin-bottom:10px}
+.alts li strong{display:block;font-weight:700}
+.alts li .muted{font-size:0.95rem}
+.price{color:var(--muted);font-weight:600}

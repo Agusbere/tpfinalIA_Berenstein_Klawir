@@ -1,68 +1,68 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Global theme for AntiShopper AI - modern, minimal, trustworthy */
+:root{
+  --primary:#4F46E5; /* main violet-blue */
+  --primary-2:#6366F1; /* accent */
+  --bg:#F9FAFB; /* light background */
+  --card:#FFFFFF; /* card surface */
+  --text:#1F2937; /* dark text */
+  --muted:#6B7280; /* muted text */
+  --glass: rgba(79,70,229,0.06);
+  --radius: 10px;
+  --shadow-1: 0 6px 18px rgba(31,41,55,0.06);
+  --shadow-2: 0 10px 30px rgba(31,41,55,0.08);
+  --transition: 200ms ease;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+/* Base page reset */
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Links */
+a{color:var(--primary-2);text-decoration:none;font-weight:600}
+a:hover{opacity:0.9}
+
+/* Headings */
+h1,h2,h3{margin:0;color:var(--text);font-weight:700}
+h1{font-size:1.6rem}
+h2{font-size:1.125rem}
+h3{font-size:1rem}
+
+/* Buttons - consistent style */
+.btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:10px 14px;border-radius:var(--radius);border:none;cursor:pointer;font-weight:600;transition:all var(--transition);box-shadow:none}
+.btn:focus{outline:3px solid rgba(79,70,229,0.18);outline-offset:2px}
+.btn-primary{background:linear-gradient(180deg,var(--primary),var(--primary-2));color:white}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-1)}
+.btn-ghost{background:transparent;border:1px solid rgba(31,41,55,0.06);color:var(--text)}
+.btn-ghost:hover{background:rgba(31,41,55,0.02)}
+
+/* Forms */
+input[type="text"],input[type="number"],textarea,select{width:100%;padding:12px 14px;border-radius:var(--radius);border:1px solid rgba(31,41,55,0.06);background:var(--card);color:var(--text);transition:box-shadow var(--transition),border-color var(--transition)}
+input:focus,textarea:focus,select:focus{box-shadow:0 6px 18px rgba(79,70,229,0.08);border-color:var(--primary-2);outline:none}
+label{display:block;margin-bottom:8px;font-weight:600;color:var(--text)}
+
+/* Containers & cards */
+.container{max-width:980px;margin:0 auto;padding:20px}
+.main-center{min-height:calc(100vh - 140px);display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-2);padding:22px;width:min(760px,94vw)}
+
+.muted{color:var(--muted)}
+
+/* Lists */
+ul{margin:0;padding:0;list-style:none}
+li{margin-bottom:10px}
+
+/* Responsiveness */
+@media (max-width:720px){
+  .card{padding:16px}
+  h1{font-size:1.25rem}
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}

@@ -1,42 +1,40 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* App-specific styles using the global theme from index.css */
+
+.site-header{background:linear-gradient(90deg,var(--primary),rgba(79,70,229,0.9));color:white;padding:18px 0;box-shadow:0 6px 20px rgba(15,23,42,0.06)}
+.site-header .container{max-width:980px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between}
+.brand{margin:0;font-weight:700;font-size:1.25rem}
+.tag{margin:0;font-size:0.9rem;opacity:0.95}
+
+.main-wrap{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 140px);padding:20px}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow-2);padding:24px;width:min(760px,94vw)}
+
+.form label{display:block;margin-bottom:8px;font-weight:600;color:var(--text)}
+/* inputs inherit base styles from index.css; extra spacing here */
+.form .row{display:flex;gap:12px}
+.form .small{width:160px}
+
+.btn{border-radius:var(--radius);padding:10px 14px;transition:all var(--transition)}
+.btn.primary{background:linear-gradient(180deg,var(--primary),var(--primary-2));color:#fff}
+.btn.ghost{background:transparent;border:1px solid rgba(31,41,55,0.06);color:var(--text)}
+
+.question{margin-bottom:14px}
+.radio-group label{margin-right:12px;color:var(--muted);font-weight:600}
+
+.result .recommend-text{font-size:1.05rem;margin-bottom:12px;color:var(--text)}
+.alts ul{padding-left:0;margin-top:12px}
+.alts li{padding:12px;border-radius:8px;background:linear-gradient(180deg,rgba(79,70,229,0.02),transparent);display:block;margin-bottom:10px}
+.alts li strong{display:block;font-weight:700}
+.alts li .muted{font-size:0.95rem}
+
+.loading{margin-top:12px;color:var(--muted)}
+
+/* Small visual micro-interactions */
+.card:hover{transform:translateY(-2px);transition:transform var(--transition)}
+.alts li:hover{box-shadow:var(--shadow-1);transform:translateY(-2px)}
+
+@media (max-width:720px){
+  .site-header .container{flex-direction:column;gap:8px;align-items:flex-start}
+  .card{width:94vw;padding:18px}
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
