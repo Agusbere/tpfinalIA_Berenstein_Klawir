@@ -10,7 +10,7 @@ Características:
 
 ## Requisitos
 - Node.js 18+
-- (Opcional) Ollama local con Llama 3 corriendo en `http://localhost:11434`
+- Ollama local con Llama 3 corriendo en `http://localhost:11434`
 - Acceso a la base de datos Supabase (la conexión ya fue provista).
 
 ## Instalación
@@ -69,36 +69,68 @@ Ajustá la consulta SQL si tu tabla o columnas se llaman distinto.
 1. Instala Ollama siguiendo su guía oficial en https://ollama.ai (descarga e instrucciones).
 2. Inicia Ollama en tu máquina y carga un modelo Llama 3 (ejemplo):
 
-Sigue la documentación oficial de Ollama para instalar y gestionar modelos. Indicaciones generales:
+Sigue la documentación oficial de Ollama para instalar y gestionar modelos. Indicaciones generales y troubleshooting para Windows:
+
+Comandos útiles:
 
 ```
-# Verifica qué modelos tienes disponibles
+# Verifica la versión de Ollama
+ollama --version
+
+# Lista modelos disponibles/instalados
 ollama list
 
 # Descargar/instalar un modelo (ejemplo genérico)
-ollama pull <modelo-disponible>
+ollama pull llama3
 
-# Inicia el servicio/daemon de Ollama (consulta la doc según tu versión)
-ollama daemon
+# Inicia el servicio HTTP de Ollama (no le pases el nombre del modelo aquí)
+ollama serve
+
+# Lista procesos/servicios de Ollama (modelos corriendo)
+ollama ps
+
+# Ejecuta el modelo en primer plano (modo interactivo / debugging)
+ollama run llama3
+
+# Detener un modelo en ejecución
+ollama stop llama3
 ```
 
-Recomendación de modelo: si dispones de una variante de Llama 3 en tu instalación, usa una variante de la familia Llama 3 (por ejemplo `llama3` o `llama3-chat`) — son las que mejor siguen instrucciones en español. Si tu equipo no tiene suficiente memoria/CPU, elige una variante más pequeña (por ejemplo la versión 7B en lugar de 13B/70B).
+Notas específicas sobre errores comunes que viste:
 
-3. Ajustá `OLLAMA_URL` en `.env` si usás otro puerto.
+- `Error: accepts 0 arg(s), received 1` al ejecutar `ollama serve llama3` — causa: el comando `serve` no acepta el nombre del modelo. Debes ejecutar solo `ollama serve` y usar `ollama run <modelo>` o `ollama pull <modelo>` según tu flujo.
+- `Error: listen tcp 127.0.0.1:11434: bind: Solo se permite un uso de cada dirección de socket (protocolo/dirección de red/puerto)` — esto significa que el puerto 11434 ya está ocupado por otro proceso. Para detectar y cerrar ese proceso en Windows abrí cmd como administrador y ejecutá:
 
-NOTA: esta app ahora depende explícitamente de Ollama para generar todas las recomendaciones; si Ollama no está corriendo o devuelve JSON inválido, el backend devolverá un error 502 que el frontend mostrará como fallo de IA.
+```
+netstat -ano | findstr :11434
 
-## Notas para desarrolladores junior
-- El backend usa consultas SQL directas mediante `pg` (sin cliente oficial de Supabase). Revisa `server/index.js`.
-- El frontend es simple y usa `axios` desde `src/utils/api.js`. Si tenés dudas, abrí esos archivos.
+# Esto devuelve la línea con el PID (última columna). Después, para ver el proceso:
+tasklist /FI "PID eq <PID>"
 
-## Próximos pasos sugeridos
-- Mejorar el parsing de alternativas dependiendo del esquema real de la base de datos.
-- Añadir validaciones de formulario y manejo de errores más robusto.
-- Agregar estilos más elaborados y tests.
+# Si querés terminarlo:
+taskkill /PID <PID> /F
+```
 
----
-Si querés, puedo:
-- Ajustar la consulta SQL a tu esquema real si me das los nombres de tablas/columnas.
-- Añadir estilos CSS adicionales.
-- Integrar autenticación segura si lo necesitás.
+O alternativamente usá `ollama ps` para ver si algún modelo ya está corriendo y `ollama stop <modelo>` para detenerlo.
+
+Si `ollama run llama3` parece "pegado" (spinner), puede ser:
+ - está descargando/desempaquetando el modelo (muy común, consume disco y red),
+ - o quedó en modo interactivo esperando entrada, o
+ - no tiene permisos/algún antivirus/firewall lo está bloqueando.
+
+Para probar si el servidor HTTP de Ollama está disponible una vez iniciado con `ollama serve`, probá:
+
+```
+curl http://localhost:11434/   # o abrí http://localhost:11434 en el navegador
+```
+
+Si ves una respuesta HTTP (200/404) entonces el servidor está escuchando. Si no, usá `netstat` para averiguar quién ocupa ese puerto.
+
+3. Ajustá `OLLAMA_URL` y el modelo en `.env` si usás otro puerto o nombre de modelo:
+
+```
+OLLAMA_URL=http://localhost:11434
+OLLAMA_MODEL=llama3
+```
+
+NOTA: el servidor de esta app usa el endpoint HTTP de Ollama `/api/generate`. Si el servidor devuelve 502 con mensaje sobre JSON inválido o 404, revisá que Ollama esté corriendo con `ollama serve` y que el puerto en `OLLAMA_URL` sea el correcto.

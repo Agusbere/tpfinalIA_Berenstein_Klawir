@@ -1,0 +1,9 @@
+.chat-root{display:flex;flex-direction:column;gap:12px}
+.messages{display:flex;flex-direction:column;gap:10px;max-height:46vh;overflow:auto;padding-right:6px}
+.msg{padding:10px 12px;border-radius:12px;max-width:84%;line-height:1.3}
+.msg.ai{background:linear-gradient(180deg,rgba(79,70,229,0.06),transparent);align-self:flex-start}
+.msg.user{background:rgba(31,41,55,0.06);align-self:flex-end}
+.chat-actions{display:flex;gap:12px;align-items:center}
+.chat-actions input{flex:1;padding:10px 12px;border-radius:8px;border:1px solid rgba(31,41,55,0.06)}
+.chat-buttons{display:flex;gap:8px}
+.error{color:#b91c1c;font-weight:600}

@@ -5,12 +5,12 @@ function formatPrice(p) {
   if (p == null) return ''
   const n = Number(p)
   if (!Number.isNaN(n)) return `$${n.toLocaleString('es-AR')}`
-  // already a string
+  
   return p
 }
 
 export default function RecommendationCard({ recommendation, alternatives }) {
-  // recommendation may be a string or structured object { decision, reasons:[], alternatives:[] }
+  
   const structured = recommendation && typeof recommendation === 'object'
   return (
     <div className="result">
